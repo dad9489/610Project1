@@ -4,12 +4,17 @@
    <ContextStates>
       <ContextState
          contextName = "Pipeline::drawPoly(int):Pipeline.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "n">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Matrix::multiplyVec(std::__1::vector&lt;float, std::__1::allocator&lt;float&gt; &gt;):Matrix.cpp">
+         contextName = "Pipeline::setViewport(int, int, int, int):Pipeline.cpp">
       </ContextState>
       <ContextState
-         contextName = "drawPolysXform(Pipeline&amp;):Application.cpp">
+         contextName = "Matrix::multiplyMat(Matrix*):Matrix.cpp">
       </ContextState>
       <ContextState
          contextName = "Pipeline::scale(float, float):Pipeline.cpp">
@@ -18,6 +23,23 @@
                value = "transformMatrix-&gt;multiplyMat(scaleMatrix)">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "add_edge_to_table(std::__1::vector&lt;std::__1::vector&lt;st_bucket, std::__1::allocator&lt;st_bucket&gt; &gt;, std::__1::allocator&lt;std::__1::vector&lt;st_bucket, std::__1::allocator&lt;st_bucket&gt; &gt; &gt; &gt;, st_vertex, st_vertex):Rasterizer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "edge_table[y_min]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "drawPolysXform(Pipeline&amp;):Application.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "Rasterizer::drawPolygon(int, st_vertex const*):Rasterizer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "Matrix::multiplyVec(std::__1::vector&lt;float, std::__1::allocator&lt;float&gt; &gt;):Matrix.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

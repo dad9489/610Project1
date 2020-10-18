@@ -232,32 +232,32 @@ static void drawPolysXform( Pipeline &P ) {
     P.setColor( triangle_c );
     P.drawPoly( triangle_id );
 
-//    ///
-//    // Draw a green square translated
-//    ///
-//    P.clearTransform();
-//    P.translate( 80.0f, 75.0f );
-//    P.setColor( square_c );
-//    P.drawPoly( square_id );
-//
-//    ///
-//    // Draw a pink octagon scaled
-//    ///
-//    P.clearTransform();
-//    P.scale( 0.75f, 0.5f );
-//    P.setColor( octagon_c );
-//    P.drawPoly( octagon_id );
-//
-//    ///
-//    // Draw a green star translated, scaled, rotated, then scaled back
-//    ///
-//    P.clearTransform();
-//    P.translate( 50.0f, 50.0f );
-//    P.scale( 2.0f, 2.0f );
-//    P.rotate( -10.0f );
-//    P.translate( -50.0f, 50.0f );
-//    P.setColor( star_c );
-//    P.drawPoly( star_id );
+    ///
+    // Draw a green square translated
+    ///
+    P.clearTransform();
+    P.translate( 80.0f, 75.0f );
+    P.setColor( square_c );
+    P.drawPoly( square_id );
+
+    ///
+    // Draw a pink octagon scaled
+    ///
+    P.clearTransform();
+    P.scale( 0.75f, 0.5f );
+    P.setColor( octagon_c );
+    P.drawPoly( octagon_id );
+
+    ///
+    // Draw a green star translated, scaled, rotated, then scaled back
+    ///
+    P.clearTransform();
+    P.translate( 50.0f, 50.0f );
+    P.scale( 2.0f, 2.0f );
+    P.rotate( -10.0f );
+    P.translate( -50.0f, 50.0f );
+    P.setColor( star_c );
+    P.drawPoly( star_id );
 }
 
 ///

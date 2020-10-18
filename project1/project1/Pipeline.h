@@ -41,6 +41,7 @@ private:
     Rasterizer* rasterizer;
     vector<pair<int, const st_vertex*>> polygons;
     Matrix* transformMatrix;
+    Matrix* viewportMatrix;
     Vertex clipWindowLL;
     Vertex clipWindowUR;
 

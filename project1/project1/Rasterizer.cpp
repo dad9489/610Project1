@@ -66,6 +66,7 @@ vector<vector<Bucket > > add_edge_to_table(vector<vector<Bucket > > edge_table, 
 bool compare_buckets(const st_bucket &a, const st_bucket &b)
 {
     if(a.x != b.x) {
+        
         return a.x < b.x;
     }
     return a.inv_m < b.inv_m;
@@ -111,7 +112,7 @@ void Rasterizer::drawPolygon( int n, const Vertex v[] )
         
         //Discard entries from active list where y = y_max
         active_list.erase(std::remove_if(active_list.begin(), active_list.end(), [y](Bucket bucket){
-            return bucket.y_max == y;
+            return floor(bucket.y_max) == y;
         }), active_list.end());
         
         if(edge_table[y].size() > 0) {

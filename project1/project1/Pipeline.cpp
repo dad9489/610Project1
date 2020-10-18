@@ -38,6 +38,7 @@ Pipeline::Pipeline( int w, int h ) : Canvas(w,h)
 {
     rasterizer = new Rasterizer( w, *this );
     transformMatrix = new Matrix();
+    viewportMatrix = new Matrix();
 }
 
 ///
@@ -71,9 +72,9 @@ void Pipeline::drawPoly( int polyID )
     pair<int, const st_vertex*> polyData = polygons[polyID];
     int n = polyData.first;
     const st_vertex* v = polyData.second;
-    
-    Vertex polygons_mod[100];
 
+    // Apply the transformation matrix to each vertex
+    Vertex polyTransf[100];
     for (int i = 0; i < n; i++) {
         Vertex p = v[i];
         vector<float> coords = {p.x, p.y, 1};
@@ -82,28 +83,27 @@ void Pipeline::drawPoly( int polyID )
         res_v.x = res[0];
         res_v.y = res[1];
         res_v.z = res[2];
-        polygons_mod[i] = res_v;
-//        Vertex p = v[i];
-//        vector<float> coords = {p.x, p.y, p.z};
-//        vector<float> res = coords;
-//        Vertex res_v;
-//        res_v.x = res[0];
-//        res_v.y = res[1];
-//        res_v.z = res[2];
-//        polygons_mod[i] = res_v;
+        polyTransf[i] = res_v;
     }
 
-    Vertex polygons_clip[100];
-    int new_n = clipPolygon(n, polygons_mod, polygons_clip, clipWindowLL, clipWindowUR );
+    // Clip the polygon to the clipping window
+    Vertex polyClip[100];
+    int new_n = clipPolygon(n, polyTransf, polyClip, clipWindowLL, clipWindowUR );
     
-//    cout << "----------------\n";
-//    for (int i = 0; i < n; i++) {
-//        Vertex p = polygons_clip[i];
-//        cout << "x: " << p.x;
-//        cout << " | y: " << p.y << "\n";
-//    }
+    // Apply the viewport transform to each vertex
+    Vertex polyViewp[100];
+    for (int i = 0; i < new_n; i++) {
+        Vertex p = polyClip[i];
+        vector<float> coords = {p.x, p.y, 1};
+        vector<float> res = this->viewportMatrix->multiplyVec(coords);
+        Vertex res_v;
+        res_v.x = res[0];
+        res_v.y = res[1];
+        res_v.z = res[2];
+        polyViewp[i] = res_v;
+    }
 
-    rasterizer->drawPolygon(new_n, polygons_clip);
+    rasterizer->drawPolygon(new_n, polyViewp);
 }
 
 ///
@@ -183,5 +183,21 @@ void Pipeline::setClipWindow( float bottom, float top, float left, float right )
 ///
 void Pipeline::setViewport( int x, int y, int w, int h )
 {
-    // YOUR IMPLEMENTATION HERE
+    float xdmax = x + w - 1;
+    float xdmin = x;
+    float ydmax = y + h - 1;
+    float ydmin = y;
+
+    float right = clipWindowUR.x;
+    float left = clipWindowLL.x;
+    float top = clipWindowUR.y;
+    float bottom = clipWindowLL.y;
+
+    float var1 = (xdmax - xdmin) / (right - left);
+    float var2 = (ydmax - ydmin) / (top - bottom);
+    float var3 = (right*xdmin - left*xdmax) / (right - left);
+    float var4 = (top*ydmin - bottom*ydmax) / (top - bottom);
+
+
+    viewportMatrix = new Matrix(var1, 0, 0, 0, var2, 0, var3, var4, 1);
 }
