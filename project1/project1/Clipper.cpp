@@ -130,15 +130,9 @@ int clipBoundary(int num, const Vertex inV[], Vertex outV[], float x, float y, b
 ///
 int clipPolygon( int num, const Vertex inV[], Vertex outV[],
                  Vertex ll, Vertex ur ) {
-//    Vertex cleanOutV1[num];
-//    Vertex cleanOutV2[num];
-//    Vertex cleanOutV3[num];
-    Vertex *cleanOutV1;
-    Vertex *cleanOutV2;
-    Vertex *cleanOutV3;
-    cleanOutV1 = (Vertex*)malloc(num*sizeof(*cleanOutV1));
-    cleanOutV2 = (Vertex*)malloc(num*sizeof(*cleanOutV2));
-    cleanOutV3 = (Vertex*)malloc(num*sizeof(*cleanOutV3));
+    Vertex cleanOutV1[100];
+    Vertex cleanOutV2[100];
+    Vertex cleanOutV3[100];
     
     
     num = clipBoundary(num, inV, cleanOutV1, ur.x, -1, false);  // clip to right edge

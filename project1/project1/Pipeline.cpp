@@ -72,43 +72,36 @@ void Pipeline::drawPoly( int polyID )
     int n = polyData.first;
     const st_vertex* v = polyData.second;
     
-//    Vertex polygons_mod[n];
-    Vertex *polygons_mod;
-    polygons_mod = (Vertex*)malloc(n*sizeof(*polygons_mod));
+    Vertex polygons_mod[100];
 
     for (int i = 0; i < n; i++) {
-//        Vertex p = v[i];
-//        vector<float> coords = {p.x, p.y, p.z};
-//        vector<float> res = this->transformMatrix->multiplyVec(coords);
-//        Vertex res_v;
-//        res_v.x = res[0];
-//        res_v.y = res[1];
-//        res_v.z = res[2];
-//        polygons_mod[i] = res_v;
         Vertex p = v[i];
-        vector<float> coords = {p.x, p.y, p.z};
-        vector<float> res = coords;
+        vector<float> coords = {p.x, p.y, 1};
+        vector<float> res = this->transformMatrix->multiplyVec(coords);
         Vertex res_v;
         res_v.x = res[0];
         res_v.y = res[1];
         res_v.z = res[2];
         polygons_mod[i] = res_v;
+//        Vertex p = v[i];
+//        vector<float> coords = {p.x, p.y, p.z};
+//        vector<float> res = coords;
+//        Vertex res_v;
+//        res_v.x = res[0];
+//        res_v.y = res[1];
+//        res_v.z = res[2];
+//        polygons_mod[i] = res_v;
     }
 
-    Vertex tmp[50];
-    Vertex *polygons_clip;
-    int new_n = clipPolygon(n, polygons_mod, tmp, clipWindowLL, clipWindowUR );
+    Vertex polygons_clip[100];
+    int new_n = clipPolygon(n, polygons_mod, polygons_clip, clipWindowLL, clipWindowUR );
     
-    polygons_clip = (Vertex*)malloc(new_n*sizeof(*polygons_clip));
-    for (int i = 0; i < new_n; i++)
-        polygons_clip[i] = tmp[i];
-    
-    cout << "----------------\n";
-    for (int i = 0; i < n; i++) {
-        Vertex p = polygons_clip[i];
-        cout << "x: " << p.x;
-        cout << " | y: " << p.y << "\n";
-    }
+//    cout << "----------------\n";
+//    for (int i = 0; i < n; i++) {
+//        Vertex p = polygons_clip[i];
+//        cout << "x: " << p.x;
+//        cout << " | y: " << p.y << "\n";
+//    }
 
     rasterizer->drawPolygon(new_n, polygons_clip);
 }
@@ -146,7 +139,7 @@ void Pipeline::translate( float tx, float ty )
 void Pipeline::rotate( float degrees )
 {
     float theta = degrees * (M_PI / 180.0);
-    Matrix* rotateMatrix = new Matrix(cos(theta), sin(theta), 0, -1*sin(theta), cos(theta), 0, 0, 0, 1);
+    Matrix* rotateMatrix = new Matrix(cos(theta), sin(theta), 0, -sin(theta), cos(theta), 0, 0, 0, 1);
     this->transformMatrix = transformMatrix->multiplyMat(rotateMatrix);
 }
 

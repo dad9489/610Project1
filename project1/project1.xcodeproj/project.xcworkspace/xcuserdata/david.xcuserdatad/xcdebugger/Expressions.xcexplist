@@ -4,17 +4,6 @@
    <ContextStates>
       <ContextState
          contextName = "Pipeline::drawPoly(int):Pipeline.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "v">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Pipeline::addPoly(int, st_vertex const*):Pipeline.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "Pipeline::translate(float, float):Pipeline.cpp">
       </ContextState>
       <ContextState
          contextName = "Matrix::multiplyVec(std::__1::vector&lt;float, std::__1::allocator&lt;float&gt; &gt;):Matrix.cpp">
@@ -23,7 +12,12 @@
          contextName = "drawPolysXform(Pipeline&amp;):Application.cpp">
       </ContextState>
       <ContextState
-         contextName = "clipPolygon(int, st_vertex const*, st_vertex*, st_vertex, st_vertex):Clipper.cpp">
+         contextName = "Pipeline::scale(float, float):Pipeline.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "transformMatrix-&gt;multiplyMat(scaleMatrix)">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>
