@@ -22,5 +22,8 @@
       <ContextState
          contextName = "drawPolysXform(Pipeline&amp;):Application.cpp">
       </ContextState>
+      <ContextState
+         contextName = "clipPolygon(int, st_vertex const*, st_vertex*, st_vertex, st_vertex):Clipper.cpp">
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

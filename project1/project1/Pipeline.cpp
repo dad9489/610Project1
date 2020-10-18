@@ -72,7 +72,9 @@ void Pipeline::drawPoly( int polyID )
     int n = polyData.first;
     const st_vertex* v = polyData.second;
     
-    Vertex polygons_mod[n];
+//    Vertex polygons_mod[n];
+    Vertex *polygons_mod;
+    polygons_mod = (Vertex*)malloc(n*sizeof(*polygons_mod));
 
     for (int i = 0; i < n; i++) {
 //        Vertex p = v[i];
@@ -93,9 +95,13 @@ void Pipeline::drawPoly( int polyID )
         polygons_mod[i] = res_v;
     }
 
+    Vertex tmp[50];
     Vertex *polygons_clip;
-    polygons_clip = (Vertex*)malloc(n*sizeof(Vertex));
-    clipPolygon(n, polygons_mod, polygons_clip, clipWindowLL, clipWindowUR );
+    int new_n = clipPolygon(n, polygons_mod, tmp, clipWindowLL, clipWindowUR );
+    
+    polygons_clip = (Vertex*)malloc(new_n*sizeof(*polygons_clip));
+    for (int i = 0; i < new_n; i++)
+        polygons_clip[i] = tmp[i];
     
     cout << "----------------\n";
     for (int i = 0; i < n; i++) {
@@ -104,7 +110,7 @@ void Pipeline::drawPoly( int polyID )
         cout << " | y: " << p.y << "\n";
     }
 
-    rasterizer->drawPolygon(n, polygons_clip);
+    rasterizer->drawPolygon(new_n, polygons_clip);
 }
 
 ///
