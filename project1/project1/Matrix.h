@@ -5,8 +5,8 @@
 ///  Copyright 2020 Rochester Institute of Technology. All rights reserved.
 ///
 
-#ifndef _PIPELINE_H_
-#define _PIPELINE_H_
+#ifndef _MATRIX_H_
+#define _MATRIX_H_
 
 #include <vector>
 #include <tuple>
@@ -22,8 +22,6 @@ private:
    
     /// Tuple representing matrix
     vector<vector<float>> mat;
-    
-    void populateMatrix(int v00, int v01, int v02, int v10, int v11, int v12, int v20, int v21, int v22);
 
     
 public:
@@ -38,7 +36,7 @@ public:
     /// Constructor with values
     ///
     ///
-    Matrix(int v00, int v01, int v02, int v10, int v11, int v12, int v20, int v21, int v22);
+    Matrix(float v00, float v01, float v02, float v10, float v11, float v12, float v20, float v21, float v22);
 
     ///
     /// multiplyMat - Function to represent the multiplication of matricies.
@@ -51,18 +49,19 @@ public:
     /// @return a new Matrix that is the multiplication of this matrix and the provided one
     ///
     Matrix* multiplyMat( Matrix* multMat );
-    
+
+    void populateMatrix(float v00, float v01, float v02, float v10, float v11, float v12, float v20, float v21, float v22);
+
     ///
     /// multiplyVec - Function to represent the multiplication of this matrix
     ///             with a vector. The vector will be nx1. This function
-    ///             returns a clean matrix as the result. Does not
-    ///             modify this object.
+    ///             returns a clean vector as the result.
     ///
     /// @param vec - The vector with which to multiply
     ///
-    /// @return a new Matrix that is the multiplication of this matrix and the provided vector
+    /// @return a new vector that is the multiplication of this matrix and the provided vector
     ///
-    Matrix* multiplyVec( tuple<float, float, float> vec );
+    vector<float> multiplyVec( vector<float> vec );
 
 };
 

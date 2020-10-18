@@ -37,6 +37,7 @@ Pipeline::Pipeline( int w, int h ) : Canvas(w,h)
     // YOUR IMPLEMENTATION HERE if you need to add initializers
 {
     rasterizer = new Rasterizer( w, *this );
+    transformMatrix = new Matrix();
 }
 
 ///
@@ -55,15 +56,6 @@ int Pipeline::addPoly( int n, const Vertex p[] )
 {
     polygons.push_back(make_pair(n, p));
     int id = (int)polygons.size()-1;
-    
-    
-    Matrix* res = new Matrix();
-    
-    
-    
-    
-    
-    
     return id;
 }
 
@@ -76,11 +68,20 @@ int Pipeline::addPoly( int n, const Vertex p[] )
 ///
 void Pipeline::drawPoly( int polyID )
 {
-    // TODO apply transformation
     pair<int, const st_vertex*> polyData = polygons[polyID];
     int n = polyData.first;
-    const st_vertex* p = polyData.second;
-    rasterizer->drawPolygon(n, p);
+    const st_vertex* v = polyData.second;
+    
+    for (int i = 0; i < n; i++) {
+        Vertex p = v[i];
+        vector<float> coords = {p.x, p.y, p.z};
+        vector<float> res = transformMatrix->multiplyVec(coords);
+        p.x = res[0];
+        p.y = res[1];
+        p.z = res[2];
+    }
+    
+    rasterizer->drawPolygon(n, v);
 }
 
 ///

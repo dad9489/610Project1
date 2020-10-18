@@ -18,6 +18,7 @@
 #include "Canvas.h"
 #include "Types.h"
 #include "Rasterizer.h"
+#include "Matrix.h"
 
 using namespace std;
 
@@ -39,6 +40,7 @@ private:
     /// Instance variables
     Rasterizer* rasterizer;
     vector<pair<int, const st_vertex*>> polygons;
+    Matrix* transformMatrix;
 
 public:
 

@@ -14,32 +14,20 @@ Matrix::Matrix()
     populateMatrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
 }
 
-Matrix::Matrix(int v00, int v01, int v02, int v10, int v11, int v12, int v20, int v21, int v22)
+Matrix::Matrix(float v00, float v01, float v02, float v10, float v11, float v12, float v20, float v21, float v22)
 {
     populateMatrix(v00, v01, v02, v10, v11, v12, v20, v21, v22);
 }
 
-void Matrix::populateMatrix(int v00, int v01, int v02, int v10, int v11, int v12, int v20, int v21, int v22)
+void Matrix::populateMatrix(float v00, float v01, float v02, float v10, float v11, float v12, float v20, float v21, float v22)
 {
-    vector<float> col1;
-    vector<float> col2;
-    vector<float> col3;
-    
-    col1.push_back(v00);
-    col1.push_back(v01);
-    col1.push_back(v02);
-    
-    col2.push_back(v10);
-    col2.push_back(v11);
-    col2.push_back(v12);
-    
-    col3.push_back(v20);
-    col3.push_back(v21);
-    col3.push_back(v22);
-    
+    vector<float> col1 {v00, v01, v02};
+    vector<float> col2 {v10, v11, v12};
+    vector<float> col3 {v20, v21, v22};
+
     mat.push_back(col1);
     mat.push_back(col2);
-    mat.push_back(col1);
+    mat.push_back(col3);
 }
 
 ///
@@ -55,7 +43,7 @@ void Matrix::populateMatrix(int v00, int v01, int v02, int v10, int v11, int v12
 Matrix* Matrix::multiplyMat( Matrix* multMat )
 {
     Matrix* res = new Matrix();
-    
+
     int i, j, k;
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
@@ -64,7 +52,7 @@ Matrix* Matrix::multiplyMat( Matrix* multMat )
                 res->mat[i][j] += this->mat[i][k] * multMat->mat[k][j];
         }
     }
-    
+
     return res;
 }
 
@@ -78,7 +66,16 @@ Matrix* Matrix::multiplyMat( Matrix* multMat )
 ///
 /// @return a new Matrix that is the multiplication of this matrix and the provided vector
 ///
-Matrix* Matrix::multiplyVec( tuple<float, float, float> vec ) {
-    // TODO implement
-    return new Matrix();
+vector<float> Matrix::multiplyVec( vector<float> vec ) {
+    
+    vector<float> res(3, 0);
+    
+    for (int i=0;i<3;i++) {
+        for (int j=0;j<3;j++) {
+            float val = (this->mat[j][i]*vec[j]);
+            res[i]+=val;
+        }
+    }
+    
+    return res;
 }
