@@ -58,8 +58,8 @@ bool inside(Vertex pt, float x, float y, bool lookPositive) {
 // defined by the other axis.
 Vertex intersection_point(Vertex start, Vertex end, float x, float y) {
     Vertex output;
-    
-    if(start.x == end.x) {
+    float threshold = 0.1;
+    if(abs(start.x - end.x) < threshold) {
         // we have a vertical line (undefined slope)
         output.x = start.x;
         output.y = y;
@@ -133,6 +133,14 @@ int clipPolygon( int num, const Vertex inV[], Vertex outV[],
     Vertex cleanOutV1[num];
     Vertex cleanOutV2[num];
     Vertex cleanOutV3[num];
+//    Vertex *cleanOutV1;
+//    Vertex *cleanOutV2;
+//    Vertex *cleanOutV3;
+//    cleanOutV1 = (Vertex*)malloc(num*sizeof(Vertex));
+//    cleanOutV2 = (Vertex*)malloc(num*sizeof(Vertex));
+//    cleanOutV3 = (Vertex*)malloc(num*sizeof(Vertex));
+    
+    
     num = clipBoundary(num, inV, cleanOutV1, ur.x, -1, false);  // clip to right edge
     num = clipBoundary(num, cleanOutV1, cleanOutV2, -1, ur.y, false);  // clip to upper edge
     num = clipBoundary(num, cleanOutV2, cleanOutV3, ll.x, -1, true);  // clip to left edge

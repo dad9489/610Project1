@@ -10,7 +10,7 @@
 ///
 
 #include <iostream>
-#include <tuple>
+#include <math.h>
 
 #include "Pipeline.h"
 #include "Clipper.h"
@@ -72,16 +72,39 @@ void Pipeline::drawPoly( int polyID )
     int n = polyData.first;
     const st_vertex* v = polyData.second;
     
+    Vertex polygons_mod[n];
+
     for (int i = 0; i < n; i++) {
+//        Vertex p = v[i];
+//        vector<float> coords = {p.x, p.y, p.z};
+//        vector<float> res = this->transformMatrix->multiplyVec(coords);
+//        Vertex res_v;
+//        res_v.x = res[0];
+//        res_v.y = res[1];
+//        res_v.z = res[2];
+//        polygons_mod[i] = res_v;
         Vertex p = v[i];
         vector<float> coords = {p.x, p.y, p.z};
-        vector<float> res = transformMatrix->multiplyVec(coords);
-        p.x = res[0];
-        p.y = res[1];
-        p.z = res[2];
+        vector<float> res = coords;
+        Vertex res_v;
+        res_v.x = res[0];
+        res_v.y = res[1];
+        res_v.z = res[2];
+        polygons_mod[i] = res_v;
     }
+
+    Vertex *polygons_clip;
+    polygons_clip = (Vertex*)malloc(n*sizeof(Vertex));
+    clipPolygon(n, polygons_mod, polygons_clip, clipWindowLL, clipWindowUR );
     
-    rasterizer->drawPolygon(n, v);
+    cout << "----------------\n";
+    for (int i = 0; i < n; i++) {
+        Vertex p = polygons_clip[i];
+        cout << "x: " << p.x;
+        cout << " | y: " << p.y << "\n";
+    }
+
+    rasterizer->drawPolygon(n, polygons_clip);
 }
 
 ///
@@ -90,7 +113,7 @@ void Pipeline::drawPoly( int polyID )
 ///
 void Pipeline::clearTransform( void )
 {
-    // YOUR IMPLEMENTATION HERE
+    transformMatrix = new Matrix();
 }
 
 ///
@@ -103,7 +126,8 @@ void Pipeline::clearTransform( void )
 ///
 void Pipeline::translate( float tx, float ty )
 {
-    // YOUR IMPLEMENTATION HERE
+    Matrix* translateMatrix = new Matrix(1, 0, 0, 0, 1, 0, tx, ty, 1);
+    this->transformMatrix = transformMatrix->multiplyMat(translateMatrix);
 }
 
 ///
@@ -115,7 +139,9 @@ void Pipeline::translate( float tx, float ty )
 ///
 void Pipeline::rotate( float degrees )
 {
-    // YOUR IMPLEMENTATION HERE
+    float theta = degrees * (M_PI / 180.0);
+    Matrix* rotateMatrix = new Matrix(cos(theta), sin(theta), 0, -1*sin(theta), cos(theta), 0, 0, 0, 1);
+    this->transformMatrix = transformMatrix->multiplyMat(rotateMatrix);
 }
 
 ///
@@ -128,7 +154,8 @@ void Pipeline::rotate( float degrees )
 ///
 void Pipeline::scale( float sx, float sy )
 {
-    // YOUR IMPLEMENTATION HERE
+    Matrix* scaleMatrix = new Matrix(sx, 0, 0, 0, sy, 0, 0, 0, 1);
+    this->transformMatrix = transformMatrix->multiplyMat(scaleMatrix);
 }
 
 ///
@@ -141,7 +168,10 @@ void Pipeline::scale( float sx, float sy )
 ///
 void Pipeline::setClipWindow( float bottom, float top, float left, float right )
 {
-    // YOUR IMPLEMENTATION HERE
+    clipWindowLL.x = left;
+    clipWindowLL.y = bottom;
+    clipWindowUR.x = right;
+    clipWindowUR.y = top;
 }
 
 ///
